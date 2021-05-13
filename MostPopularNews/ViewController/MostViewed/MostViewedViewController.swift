@@ -80,11 +80,19 @@ class MostViewedViewController: UIViewController, UITableViewDelegate, UITableVi
             let saveNewFavorite = FavoriteData()
             saveNewFavorite.saveFavoriteData(newsHeadTitle: news?.title , source: news?.source, section: news?.section, update: news?.updated)
             saveNewFavorite.fetchFavorite(tableView: self.tableView)
+            self.message(new: news?.title)
             completion(true)
         }
         action.image = UIImage(systemName: "heart")
 
         return action
+    }
+
+    func message(new: String?){
+        let alert = UIAlertController(title: new, message: "saved", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okButton)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

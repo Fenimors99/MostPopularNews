@@ -69,21 +69,29 @@ class MostEmailedViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let favourite = favouriteAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [favourite])
+        let favorite = favoriteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [favorite])
     }
 
-    func favouriteAction(at indexPath: IndexPath) -> UIContextualAction {
+    func favoriteAction(at indexPath: IndexPath) -> UIContextualAction {
         let news = allNews[indexPath.row]
         let action = UIContextualAction(style: .normal, title: "Favourite") { (action, view, completion) in
             let saveNewFavorite = FavoriteData()
             saveNewFavorite.saveFavoriteData(newsHeadTitle: news.title , source: news.source, section: news.section, update: news.updated)
             saveNewFavorite.fetchFavorite(tableView: self.tableView)
+            self.message(new: news.title)
             completion(true)
         }
         action.image = UIImage(systemName: "heart")
         
         return action
+    }
+
+    func message(new: String?){
+        let alert = UIAlertController(title: new, message: "saved", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okButton)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

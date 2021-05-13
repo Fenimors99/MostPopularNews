@@ -50,6 +50,14 @@ extension DetailNewsViewControllerImpl {
     @objc func addFavorite() {
         let addFavorite = FavoriteData()
         addFavorite.saveFavoriteData(newsHeadTitle: news.title, source: news.source, section: news.updated, update: news.updated)
+        message(new: news.title)
+    }
+
+    func message(new: String?){
+        let alert = UIAlertController(title: new, message: "saved", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okButton)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
